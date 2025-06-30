@@ -183,7 +183,7 @@ export class PeerTransfer {
                     try {
                         this.dataChannel!.send(chunkData);
                     } catch (err: unknown) {
-                        if (err.message?.includes('send queue is full')) {
+                        if (err instanceof Error && err.message.includes('send queue is full')) {
                             setTimeout(trySend, 50); // try again later
                         } else {
                             console.error('❌ Unexpected send error:', err);
