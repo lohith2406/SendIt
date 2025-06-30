@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { PeerTransfer } from '@/utils/rtc';
 
-const WS_SERVER = 'ws://localhost:8080';
+const WS_SERVER = 'wss://sendit-opvc.onrender.com';
 
 export default function FileTransferPanel() {
   const [peerId, setPeerId] = useState('');
