@@ -1,5 +1,9 @@
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });
+const http = require('http');
+
+const port = process.env.PORT || 8080;
+const server = http.createServer();
+const wss = new WebSocket.Server({ server });
 
 const clients = new Map();
 
@@ -29,10 +33,13 @@ function broadcast(sender, data) {
 }
 
 function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
 }
 
-console.log('Signaling server running on ws://localhost:8080');
+server.listen(port, () => {
+    console.log(`✅ Signaling server listening on port ${port}`);
+});
